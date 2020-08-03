@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/JoanPedro/clean-cache-ts/issues"
   },
-  "homepage": "https://github.com/JoanPedro/clean-cache-ts#readme"
+  "homepage": "https://github.com/JoanPedro/clean-cache-ts#readme",
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "typescript": "^3.9.7"
+  }
 }
