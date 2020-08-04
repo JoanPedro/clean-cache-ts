@@ -19,7 +19,7 @@ class CacheStoreSpy implements CacheStore {
   }
 }
 
-type SutTypes {
+type SutTypes = {
   sut: LocalSavePurchases,
   cacheStore: CacheStoreSpy
 }
