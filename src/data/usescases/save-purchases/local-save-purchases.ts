@@ -6,5 +6,6 @@ export class LocalSavePurchases {
   // async save(): Primise<void> {} --> Função
   save = async (): Promise<void> => {
     this.cacheStore.delete('purchases');
+    this.cacheStore.insert('purchases');
   }
 }
