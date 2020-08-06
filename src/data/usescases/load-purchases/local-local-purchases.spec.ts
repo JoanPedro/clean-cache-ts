@@ -23,11 +23,10 @@ describe('LocalLoadPurchases', () => {
     expect(cacheStore.actions).toEqual([]);
   })
 
-  test('Should not insert new Cache if delete fails', async () => {
+  test('Should call correct key on load', async () => {
     const { cacheStore, sut } = makeSut();
-    cacheStore.simulateDeleteError();
-    const promise = sut.save(mockPurchases());
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.delete]);
-    await expect(promise).rejects.toThrow();
+    await sut.loadAll();
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.fetchKey).toBe('purchases');
   })
 })
