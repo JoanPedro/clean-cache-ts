@@ -46,7 +46,7 @@ describe('LocalLoadPurchases', () => {
     expect(purchases).toEqual(cacheStore.fetchResult.value);
   })
 
-  test('Should return an empty list if cache is after expiration date', async () => {
+  test('Should return an empty list if cache is expired', async () => {
     const currentDate = new Date();
     const timestamp = getCacheExpirationDate(currentDate);
     timestamp.setSeconds(timestamp.getSeconds() - 1);
@@ -56,9 +56,8 @@ describe('LocalLoadPurchases', () => {
       value: mockPurchases
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
-    expect(cacheStore.deleteKey).toBe('purchases');
     expect(purchases).toEqual([]);
   })
 
@@ -72,9 +71,8 @@ describe('LocalLoadPurchases', () => {
       value: mockPurchases
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
-    expect(cacheStore.deleteKey).toBe('purchases');
     expect(purchases).toEqual([]);
   })
 
