@@ -1,5 +1,6 @@
 import { LocalLoadPurchases } from '@/data/usescases';
 import { mockPurchases, CacheStoreSpy, getCacheExpirationDate } from '@/data/tests';
+import { CacheStoreSpys } from '@/data/tests/cacheStorySpy';
 
 
 type SutTypes = {
@@ -27,7 +28,7 @@ describe('LocalLoadPurchases', () => {
     const { cacheStore, sut } = makeSut();
     cacheStore.simulateFetchError();
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.fetch]);
     expect(purchases).toEqual([]);
   })
 
@@ -41,7 +42,7 @@ describe('LocalLoadPurchases', () => {
       value: mockPurchases
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
     expect(purchases).toEqual(cacheStore.fetchResult.value);
   })
@@ -56,7 +57,7 @@ describe('LocalLoadPurchases', () => {
       value: mockPurchases
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
     expect(purchases).toEqual([]);
   })
@@ -71,7 +72,7 @@ describe('LocalLoadPurchases', () => {
       value: mockPurchases
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
     expect(purchases).toEqual([]);
   })
@@ -86,7 +87,7 @@ describe('LocalLoadPurchases', () => {
       value: []
     };
     const purchases = await sut.loadAll();
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.fetch]);
     expect(cacheStore.fetchKey).toBe('purchases');
     expect(purchases).toEqual([]);
   })

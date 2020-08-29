@@ -1,5 +1,6 @@
 import { LocalLoadPurchases } from '@/data/usescases';
 import { mockPurchases, CacheStoreSpy } from '@/data/tests';
+import { CacheStoreSpys } from '@/data/tests/cacheStorySpy';
 
 
 type SutTypes = {
@@ -27,7 +28,7 @@ describe('LocalLoadPurchases', () => {
     const { cacheStore, sut } = makeSut();
     cacheStore.simulateDeleteError();
     const promise = sut.save(mockPurchases());
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.delete]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.delete]);
     await expect(promise).rejects.toThrow();
   })
 
@@ -36,7 +37,7 @@ describe('LocalLoadPurchases', () => {
     const { cacheStore, sut } = makeSut(timestamp);
     const purchases = mockPurchases();
     const promise = sut.save(purchases);
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.delete, CacheStoreSpy.Action.insert]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.delete, CacheStoreSpys.Action.insert]);
     expect(cacheStore.deleteKey).toBe('purchases');
     expect(cacheStore.insertKey).toBe('purchases');
     expect(cacheStore.insertValues).toEqual({
@@ -50,7 +51,7 @@ describe('LocalLoadPurchases', () => {
     const { cacheStore, sut } = makeSut();
     cacheStore.simulateInsertError();
     const promise = sut.save(mockPurchases());
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.delete, CacheStoreSpy.Action.insert]);
+    expect(cacheStore.actions).toEqual([CacheStoreSpys.Action.delete, CacheStoreSpys.Action.insert]);
     await expect(promise).rejects.toThrow();
   })
 })
