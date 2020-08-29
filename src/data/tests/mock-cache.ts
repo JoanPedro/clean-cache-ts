@@ -1,5 +1,6 @@
 import { CacheStore } from "@/data/protocols/cache";
 import { SavePurchases } from "@/domain/useCases";
+import { CacheStoreSpys } from './cacheStorySpy'
 
 const MAXAGEINDAYS = 3;
 
@@ -10,7 +11,7 @@ export const getCacheExpirationDate = (timestamp: Date): Date => {
 }
 
 export class CacheStoreSpy implements CacheStore {
-  actions: CacheStoreSpy.Action[] = [];
+  actions: CacheStoreSpys.Action[] = [];
   insertValues: SavePurchases.Params[] = [];
   deleteKey: string;
   insertKey: string;
@@ -18,18 +19,18 @@ export class CacheStoreSpy implements CacheStore {
   fetchResult: any;
 
   fetch(key: string): void {
-    this.actions.push(CacheStoreSpy.Action.fetch);
+    this.actions.push(CacheStoreSpys.Action.fetch);
     this.fetchKey = key;
     return this.fetchResult;
   }
 
   delete(key: string): void {
-    this.actions.push(CacheStoreSpy.Action.delete);
+    this.actions.push(CacheStoreSpys.Action.delete);
     this.deleteKey = key;
   }
 
   insert(key: string, value: any): void {
-    this.actions.push(CacheStoreSpy.Action.insert);
+    this.actions.push(CacheStoreSpys.Action.insert);
     this.insertKey = key;
     this.insertValues = value;
   }
@@ -41,28 +42,20 @@ export class CacheStoreSpy implements CacheStore {
 
   simulateDeleteError = (): void => {
     jest.spyOn(CacheStoreSpy.prototype, 'delete').mockImplementationOnce(() => {
-      this.actions.push(CacheStoreSpy.Action.delete);
+      this.actions.push(CacheStoreSpys.Action.delete);
       throw new Error();
     });
   }
   simulateInsertError = (): void => {
     jest.spyOn(CacheStoreSpy.prototype, 'insert').mockImplementationOnce(() => { 
-      this.actions.push(CacheStoreSpy.Action.insert);
+      this.actions.push(CacheStoreSpys.Action.insert);
       throw new Error() 
     });
   }
   simulateFetchError = (): void => {
     jest.spyOn(CacheStoreSpy.prototype, 'fetch').mockImplementationOnce(() => { 
-      this.actions.push(CacheStoreSpy.Action.fetch);
+      this.actions.push(CacheStoreSpys.Action.fetch);
       throw new Error() 
     });
-  }
-}
-
-export namespace CacheStoreSpy {
-  export enum Action {
-    delete,
-    insert,
-    fetch
   }
 }
