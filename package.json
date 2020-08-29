@@ -4,7 +4,10 @@
   "description": "Approach for a cache system architecture in typescript",
   "main": "index.js",
   "scripts": {
-    "test": "jest -no-cache --watchAll"
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
+    "test:verbose": "jest --passWithNoTests --runInBand --no-cache",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
   },
   "repository": {
     "type": "git",
